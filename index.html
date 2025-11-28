@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Generator Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h1><i class="fas fa-file-alt"></i> EasyCV</h1>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="personal">Personal</div>
+                <div class="tab" data-tab="experience">Experience</div>
+                <div class="tab" data-tab="education">Education</div>
+                <div class="tab" data-tab="skills">Skills</div>
+                <div class="tab" data-tab="templates">Templates</div>
+                <div class="tab" data-tab="analysis">Analysis</div>
+                <div class="tab" data-tab="history">History</div>
+            </div>
+            
+            <div class="tab-content active" id="personal-tab">
+                <div class="section">
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" placeholder="Xolelwa Mazibuko">
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Professional Title</label>
+                        <input type="text" id="jobTitle" placeholder="Software Developer">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="xolelwa.mazibuko@capaciti.org.za">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" placeholder="+27 3456-7890">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" placeholder="Pinetown, KZN">
+                    </div>
+                    <div class="form-group">
+                        <label for="summary">Professional Summary</label>
+                        <textarea id="summary" placeholder="Experienced software developer with 1+ years in web development..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="suggestions">
+                    <h4>Content Suggestions</h4>
+                    <p>Based on your role as <span id="role-display">Software Developer</span>:</p>
+                    <ul>
+                        <li>Highlight specific programming languages and frameworks</li>
+                        <li>Include metrics to quantify achievements</li>
+                        <li>Mention relevant certifications or courses</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="experience-tab">
+                <div class="section">
+                    <h3>Work Experience</h3>
+                    <div id="experience-container">
+                        <div class="form-group">
+                            <label for="jobTitle1">Job Title</label>
+                            <input type="text" id="jobTitle1" placeholder="Junior Developer">
+                        </div>
+                        <div class="form-group">
+                            <label for="company1">Company</label>
+                            <input type="text" id="company1" placeholder="CAPACITI">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobDate1">Dates</label>
+                            <input type="text" id="jobDate1" placeholder="OCT 2025 - Present">
+                        </div>
+                        <div class="form-group">
+                            <label for="jobDescription1">Description</label>
+                            <textarea id="jobDescription1" placeholder="Led a team of 5 developers in building enterprise applications..."></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="add-experience">+ Add Another Position</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="education-tab">
+                <div class="section">
+                    <h3>Education</h3>
+                    <div id="education-container">
+                        <div class="form-group">
+                            <label for="degree1">Degree</label>
+                            <input type="text" id="degree1" placeholder="Diploma in ICT">
+                        </div>
+                        <div class="form-group">
+                            <label for="school1">School</label>
+                            <input type="text" id="school1" placeholder=" Durban University of Technology">
+                        </div>
+                        <div class="form-group">
+                            <label for="educationDate1">Dates</label>
+                            <input type="text" id="educationDate1" placeholder="2021 - 2023">
+                        </div>
+                        <div class="form-group">
+                            <label for="educationDescription1">Description (Optional)</label>
+                            <textarea id="educationDescription1" placeholder="Graduated magna cum laude..."></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="add-education">+ Add Another Degree</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="skills-tab">
+                <div class="section">
+                    <h3>Skills</h3>
+                    <div class="form-group">
+                        <label for="skills">Skills (comma separated)</label>
+                        <textarea id="skills" placeholder="JavaScript, React, Node.js, Python, SQL, Agile Methodology"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="industry">Industry</label>
+                        <select id="industry">
+                            <option value="technology">Technology</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="finance">Finance</option>
+                            <option value="education">Education</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="suggestions">
+                    <h4>Keyword Suggestions</h4>
+                    <p>For <span id="industry-display">Technology</span> industry:</p>
+                    <ul>
+                        <li>Agile Development</li>
+                        <li>Cloud Computing</li>
+                        <li>DevOps</li>
+                        <li>CI/CD</li>
+                        <li>Microservices</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="templates-tab">
+                <div class="section">
+                    <h3>Choose a Template</h3>
+                    <div class="template-selector">
+                        <div class="template template-1 active" data-template="1">
+                            <div class="template-preview">
+                                <div class="header"></div>
+                                <div class="body">
+                                    <div class="sidebar-preview"></div>
+                                    <div class="content-preview"></div>
+                                </div>
+                            </div>
+                            <div>Professional + Photo</div>
+                        </div>
+                        <div class="template template-2" data-template="2">
+                            <div class="template-preview">
+                                <div class="header"></div>
+                                <div class="body">
+                                    <div class="sidebar-preview"></div>
+                                    <div class="content-preview"></div>
+                                </div>
+                            </div>
+                            <div>Modern</div>
+                        </div>
+                        <div class="template template-3" data-template="3">
+                            <div class="template-preview">
+                                <div class="header"></div>
+                                <div class="body">
+                                    <div class="sidebar-preview"></div>
+                                    <div class="content-preview"></div>
+                                </div>
+                            </div>
+                            <div>Creative</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Picture Upload Section (Only shown for Template 1) -->
+                    <div class="section" id="picture-upload-section">
+                        <h3>Profile Picture</h3>
+                        <div class="picture-upload">
+                            <div class="picture-preview" id="picture-preview">
+                                <div class="placeholder">No picture selected<br><small>Recommended: 150x150 px</small></div>
+                            </div>
+                            <label class="upload-btn">
+                                📷 Upload Picture
+                                <input type="file" id="picture-upload" accept="image/*">
+                            </label>
+                            <div>
+                                <button class="remove-picture" id="remove-picture" style="display: none;">Remove Picture</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="colorScheme">Color Scheme</label>
+                        <select id="colorScheme">
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                            <option value="red">Red</option>
+                            <option value="purple">Purple</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fontFamily">Font Family</label>
+                        <select id="fontFamily">
+                            <option value="arial">Arial</option>
+                            <option value="georgia">Georgia</option>
+                            <option value="times">Times New Roman</option>
+                            <option value="verdana">Verdana</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="analysis-tab">
+                <div class="section">
+                    <h3>ATS Compatibility</h3>
+                    <div class="ats-score">
+                        <span>ATS Score:</span>
+                        <span id="ats-score-value">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress" id="ats-progress"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="jobDescription">Paste Job Description for Matching</label>
+                        <textarea id="jobDescription" placeholder="Paste the job description here to check keyword matching..."></textarea>
+                    </div>
+                    
+                    <div class="keyword-list" id="keyword-list">
+                        <!-- Keywords will be populated here -->
+                    </div>
+                    
+                    <div class="suggestions">
+                        <h4>Tips to Improve ATS Score</h4>
+                        <ul>
+                            <li>Use standard section headings (Experience, Education, Skills)</li>
+                            <li>Include relevant keywords from the job description</li>
+                            <li>Avoid graphics, tables, and columns in critical sections</li>
+                            <li>Use common fonts like Arial, Times New Roman, or Calibri</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="feedback-section">
+                    <h4>Feedback & Improvement</h4>
+                    <p>How would you rate this resume?</p>
+                    <div class="feedback-actions">
+                        <button class="btn btn-secondary" id="feedback-poor">Needs Work</button>
+                        <button class="btn btn-primary" id="feedback-good">Good</button>
+                        <button class="btn btn-success" id="feedback-excellent">Excellent</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- History Tab -->
+            <div class="tab-content" id="history-tab">
+                <div class="section">
+                    <h3>Resume History</h3>
+                    <div class="form-group">
+                        <p>Load a previously saved resume to continue working on it.</p>
+                        <div id="resume-history-list">
+                            <!-- Saved resumes will appear here -->
+                        </div>
+                    </div>
+                    
+                    <div class="suggestions">
+                        <h4>How to Use</h4>
+                        <ul>
+                            <li>Your progress is automatically saved as you work</li>
+                            <li>Click on any saved resume to load it</li>
+                            <li>You can rename or delete saved resumes</li>
+                            <li>All data is stored locally in your browser</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="resume-preview">
+                <div class="resume-content" id="resume-content">
+                    <!-- Resume content will be generated here -->
+                    <div class="template-1 with-picture">
+                        <div class="resume-header">
+                            <div class="profile-picture" id="preview-picture">
+                                <!-- Picture will be inserted here -->
+                            </div>
+                            <div class="header-content">
+                                <h2 id="preview-name">Xolelwa Mazibuko</h2>
+                                <p id="preview-title">Software Developer</p>
+                                <p id="preview-contact">xolelwa.mazibuko@capaciti.org.za • +27 3456-7890 • Pinetown, KZN</p>
+                            </div>
+                        </div>
+                        <div class="resume-body">
+                            <div class="resume-sidebar">
+                                <div class="sidebar-section">
+                                    <h3>Summary</h3>
+                                    <p id="preview-summary">Experienced software Developer with 1+ years in web development...</p>
+                                </div>
+                                <div class="sidebar-section">
+                                    <h3>Skills</h3>
+                                    <div id="preview-skills">
+                                        <div class="skill-item">
+                                            <span class="skill-name">JavaScript</span>
+                                            <div class="skill-bar">
+                                                <div class="skill-level" style="width: 90%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">React</span>
+                                            <div class="skill-bar">
+                                                <div class="skill-level" style="width: 85%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <span class="skill-name">Node.js</span>
+                                            <div class="skill-bar">
+                                                <div class="skill-level" style="width: 80%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sidebar-section">
+                                    <h3>Education</h3>
+                                    <div id="preview-education">
+                                        <div class="education-item">
+                                            <div class="degree">Diploma in ICT</div>
+                                            <div class="school">Durban University of Technology</div>
+                                            <div class="date">2021 - 2023</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="resume-main">
+                                <div class="main-section">
+                                    <h3>Work Experience</h3>
+                                    <div id="preview-experience">
+                                        <div class="job-item">
+                                            <div class="job-title">Junior Developer</div>
+                                            <div class="company">CAPACITI</div>
+                                            <div class="date">oct 2025 - Present</div>
+                                            <p>Led a team of 5 developers in building enterprise applications...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <div>
+                    <button class="btn btn-primary" id="generate-resume">Generate Resume</button>
+                    <button class="btn btn-secondary" id="reset-form">Reset Form</button>
+                </div>
+                
+                <div class="export-options">
+                    <button class="btn btn-success" id="export-pdf">Export PDF</button>
+                    <button class="btn btn-success" id="export-docx">Export DOCX</button>
+                    <button class="btn btn-success" id="export-html">Export HTML</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
